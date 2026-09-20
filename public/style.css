@@ -1278,3 +1278,75 @@ footer p {
     }
 
 }
+
+/* =====================================
+   CONTACT FORM
+===================================== */
+
+.contact-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 35px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid #263548;
+    border-radius: 8px;
+    background: #0d1117;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #7f8b99;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #00a8ff;
+    box-shadow: 0 0 0 2px rgba(0, 168, 255, 0.12);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 130px;
+}
+
+.contact-form button {
+    align-self: flex-start;
+    cursor: pointer;
+}
+
+.contact-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#contactStatus {
+    margin: 0;
+    font-size: 14px;
+    min-height: 20px;
+}

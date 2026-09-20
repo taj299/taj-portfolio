@@ -315,6 +315,7 @@
 
 
     <!-- ===== PROJECTS SECTION ===== -->
+
     <section id="projects" class="section">
 
         <div class="section-title">
@@ -322,132 +323,10 @@
             <h2>Projects</h2>
         </div>
 
-        <div class="projects-grid">
-
-            <div class="project-card">
-
-                <div class="project-number">01</div>
-
-                <h3>AWS Cloud Infrastructure</h3>
-
-                <p>
-                    Designed and deployed a practical AWS cloud infrastructure
-                    using core AWS services with a focus on security,
-                    networking, scalability and monitoring.
-                </p>
-
-                <div class="project-tags">
-                    <span>AWS</span>
-                    <span>EC2</span>
-                    <span>VPC</span>
-                    <span>IAM</span>
-                    <span>S3</span>
-                    <span>CloudWatch</span>
-                </div>
-
-                <div class="project-links">
-                    <a href="#" class="project-btn">
-                        💻 GitHub
-                    </a>
-
-                    <a href="#" class="project-btn">
-                        🚀 Live Demo
-                    </a>
-                </div>
-
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">02</div>
-
-                <h3>Terraform AWS Infrastructure</h3>
-
-                <p>
-                    Automated AWS infrastructure provisioning using
-                    Terraform and Infrastructure as Code principles,
-                    making cloud resources easier to manage and reproduce.
-                </p>
-
-                <div class="project-tags">
-                    <span>Terraform</span>
-                    <span>AWS</span>
-                    <span>IaC</span>
-                </div>
-
-                <div class="project-links">
-                    <a href="#" class="project-btn">
-                        💻 GitHub
-                    </a>
-
-                    <a href="#" class="project-btn">
-                        🚀 Live Demo
-                    </a>
-                </div>
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">03</div>
-
-                <h3>Dockerized Application</h3>
-
-                <p>
-                    Containerized an application using Docker and
-                    Linux, with hands-on practice in building images,
-                    running containers and managing container workflows.
-                </p>
-
-                <div class="project-tags">
-                    <span>Docker</span>
-                    <span>Linux</span>
-                    <span>Containers</span>
-                </div>
-
-                <div class="project-links">
-                    <a href="#" class="project-btn">
-                        💻 GitHub
-                    </a>
-
-                    <a href="#" class="project-btn">
-                        🚀 Live Demo
-                    </a>
-                </div>
-
-            </div>
-
-
-            <div class="project-card">
-
-                <div class="project-number">04</div>
-                <h3>DevOps Portfolio</h3>
-
-                <p>
-                    Built a responsive portfolio website and prepared
-                    it for Docker containerization and AWS cloud deployment,
-                    following a practical DevOps workflow.
-                </p>
-
-                <div class="project-tags">
-                    <span>HTML</span>
-                    <span>CSS</span>
-                    <span>JavaScript</span>
-                    <span>Docker</span>
-                    <span>AWS</span>
-                </div>
-
-                <div class="project-links">
-                    <a href="#" class="project-btn">
-                        💻 GitHub
-                    </a>
-
-                    <a href="#" class="project-btn">
-                        🚀 Live Demo
-                    </a>
-                </div>
-            </div>
+        <!-- Projects will come from D1 -->
+        <div class="projects-grid" id="projectsGrid">
+            <p>Loading projects...</p>
+        </div>
 
     </section>
 
@@ -475,6 +354,39 @@
 
             </div>
 
+            <!-- CONTACT FORM -->
+
+            <form id="contactForm" class="contact-form">
+
+                <div class="form-group">
+                    <label for="contactName">Name</label>
+
+                    <input type="text" id="contactName" name="name" placeholder="Your Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+
+                    <input type="email" id="contactEmail" name="email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactMessage">Message</label>
+
+                    <textarea id="contactMessage" name="message" rows="5" placeholder="Write your message..."
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="btn secondary-btn">
+                    📩 Send Message
+                </button>
+
+                <p id="contactStatus"></p>
+
+            </form>
+
+            <!-- SOCIAL / DIRECT CONTACT LINKS -->
+
             <div class="contact-links">
 
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=s.tajoddin299@gmail.com" target="_blank"
@@ -490,8 +402,11 @@
                 <a href="https://github.com/taj299" target="_blank" rel="noopener noreferrer">
                     🐙 GitHub
                 </a>
+
             </div>
+
         </div>
+
     </section>
 
     <!-- ===== FOOTER ===== -->

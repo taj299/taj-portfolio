@@ -211,6 +211,28 @@ body {
     cursor: pointer;
 }
 
+.project-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.delete-btn {
+    border: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 13px;
+}
+
+.delete-btn:hover {
+    background: #fecaca;
+}
+
+
+
 
 /* Projects */
 

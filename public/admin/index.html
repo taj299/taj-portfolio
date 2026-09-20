@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,7 +78,7 @@
                 <div class="card">
                     <div class="card-icon">✉️</div>
                     <h3>Messages</h3>
-                    <strong>0</strong>
+                    <strong id="messageCount">0</strong>
                 </div>
 
             </section>
@@ -92,7 +93,7 @@
                         <p>Manage your portfolio projects</p>
                     </div>
 
-                    <button class="add-btn">
+                    <button class="add-btn" id="addProjectBtn">
                         + Add Project
                     </button>
                 </div>
@@ -125,7 +126,117 @@
 
             </section>
 
+            <!-- Add Project Form -->
+            <section class="panel project-form-panel" id="projectFormPanel" style="display: none;">
 
+                <div class="panel-header">
+                    <div>
+                        <h2>Add New Project</h2>
+                        <p>Add a project to your portfolio</p>
+                    </div>
+                </div>
+
+                <form id="projectForm">
+
+                    <div>
+                        <label for="projectTitle">Project Title</label>
+                        <input type="text" id="projectTitle" placeholder="AWS Cloud Project" required>
+                    </div>
+
+                    <div>
+                        <label for="projectDescription">Description</label>
+                        <textarea id="projectDescription" placeholder="Describe your project" required></textarea>
+                    </div>
+
+                    <div>
+                        <label for="projectTechnologies">Technologies</label>
+                        <input type="text" id="projectTechnologies" placeholder="AWS, Cloud, DevOps" required>
+                    </div>
+
+                    <div>
+                        <label for="projectGithub">GitHub URL</label>
+                        <input type="url" id="projectGithub" placeholder="https://github.com/...">
+                    </div>
+
+                    <div>
+                        <label for="projectLive">Live URL</label>
+                        <input type="url" id="projectLive" placeholder="https://...">
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit">Add Project</button>
+                        <button type="button" id="cancelProjectBtn">Cancel</button>
+                    </div>
+
+                </form>
+
+            </section>
+            <!-- EDIT PROJECT FORM -->
+
+            <section class="panel project-form-panel" id="editProjectFormPanel" style="display: none;">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Edit Project</h2>
+                        <p>Update your portfolio project</p>
+                    </div>
+                </div>
+
+                <form id="editProjectForm">
+
+                    <input type="hidden" id="editProjectId">
+
+                    <div>
+                        <label for="editProjectTitle">Project Title</label>
+                        <input type="text" id="editProjectTitle" placeholder="AWS Cloud Project" required>
+                    </div>
+
+                    <div>
+                        <label for="editProjectDescription">Description</label>
+                        <textarea id="editProjectDescription" placeholder="Describe your project" required></textarea>
+                    </div>
+
+                    <div>
+                        <label for="editProjectTechnologies">Technologies</label>
+                        <input type="text" id="editProjectTechnologies" placeholder="AWS, Cloud, DevOps" required>
+                    </div>
+
+                    <div>
+                        <label for="editProjectGithub">GitHub URL</label>
+                        <input type="url" id="editProjectGithub" placeholder="https://github.com/...">
+                    </div>
+
+                    <div>
+                        <label for="editProjectLive">Live URL</label>
+                        <input type="url" id="editProjectLive" placeholder="https://...">
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit">Update Project</button>
+                        <button type="button" id="cancelEditProjectBtn">
+                            Cancel
+                        </button>
+                    </div>
+
+                </form>
+
+            </section>
+            <!-- =============================== -->
+            <!-- MESSAGES -->
+            <!-- =============================== -->
+
+            <section class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Messages</h2>
+                        <p>Messages received from your portfolio contact form</p>
+                    </div>
+                </div>
+
+                <div id="messageList" class="message-list">
+                    <p>Loading messages...</p>
+                </div>
+            </section>
             <!-- Quick Actions -->
             <section class="panel">
 
@@ -138,7 +249,7 @@
 
                 <div class="actions">
 
-                    <button>+ Add Project</button>
+                    <button id="quickAddProjectBtn">+ Add Project</button>
                     <button>+ Add Skill</button>
                     <button>📝 Edit About</button>
                     <button>⚙️ Settings</button>
@@ -152,6 +263,5 @@
     </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>

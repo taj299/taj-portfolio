@@ -1,8 +1,21 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "taj-portfolio",
+  "main": "./src/index.js",
   "compatibility_date": "2026-09-11",
+
   "assets": {
-    "directory": "./public"
-  }
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+
+  "d1_databases": [
+    {
+      "binding": "taj_portfolio_db",
+      "database_name": "taj-portfolio-db",
+      "database_id": "f267ed2e-3368-4c7b-b387-26764280625a",
+      "remote": true
+    }
+  ]
 }
