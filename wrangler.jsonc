@@ -1,21 +1,30 @@
+
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "taj-portfolio",
   "main": "./src/index.js",
-  "compatibility_date": "2026-09-11",
-
+  "compatibility_date": "2026-11-12",
+  "observability": {
+    "enabled": true
+  },
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": [
+      "/api/*", "/admin", "/admin/*"
+    ]
   },
-
   "d1_databases": [
     {
       "binding": "taj_portfolio_db",
       "database_name": "taj-portfolio-db",
-      "database_id": "f267ed2e-3368-4c7b-b387-26764280625a",
-      "remote": true
+      "database_id": "f267ed2e-3368-4c7b-b387-26764280625a"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "RESUME_STORAGE",
+      "id": "8a33b295b70c4814be3c2600cef826f9"
     }
   ]
 }

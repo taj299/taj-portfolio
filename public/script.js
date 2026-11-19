@@ -1,27 +1,26 @@
 console.log("Taj Portfolio loaded");
 
 // =====================================
-// LOGOUT BUTTON
+// HELPERS (security)
 // =====================================
 
-const logoutButton = document.querySelector(".logout-btn");
-
-if (logoutButton) {
-  logoutButton.addEventListener("click", function () {
-    alert("Logout functionality will be added later.");
-  });
+function escapeHtml(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
-// =====================================
-// ADMIN ADD PROJECT BUTTON
-// =====================================
-
-const addProjectButton = document.querySelector(".add-btn");
-
-if (addProjectButton) {
-  addProjectButton.addEventListener("click", function () {
-    alert("Project management is available in Admin Panel.");
-  });
+// Allow only valid https links (blocks javascript: and similar)
+function safeUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.href : "";
+  } catch {
+    return "";
+  }
 }
 
 // =====================================
@@ -54,8 +53,6 @@ async function loadProjects() {
 
     const data = await response.json();
 
-    console.log("Portfolio Projects API:", data);
-
     if (!data.success) {
       throw new Error(data.message || "Failed to load projects");
     }
@@ -67,7 +64,7 @@ async function loadProjects() {
       return;
     }
 
-    // Clear existing static projects
+    // Clear loading text
     projectsGrid.innerHTML = "";
 
     // No projects
@@ -84,15 +81,18 @@ async function loadProjects() {
 
       projectCard.className = "project-card";
 
+      const githubUrl = safeUrl(project.github_url);
+      const liveUrl = safeUrl(project.live_url);
+
       projectCard.innerHTML = `
         <div class="project-number">
           ${String(index + 1).padStart(2, "0")}
         </div>
 
-        <h3>${project.title || ""}</h3>
+        <h3>${escapeHtml(project.title)}</h3>
 
         <p>
-          ${project.description || ""}
+          ${escapeHtml(project.description)}
         </p>
 
         <div class="project-tags">
@@ -100,7 +100,9 @@ async function loadProjects() {
             project.technologies
               ? project.technologies
                   .split(",")
-                  .map((tech) => `<span>${tech.trim()}</span>`)
+                  .map((tech) => tech.trim())
+                  .filter(Boolean)
+                  .map((tech) => `<span>${escapeHtml(tech)}</span>`)
                   .join("")
               : ""
           }
@@ -109,10 +111,10 @@ async function loadProjects() {
         <div class="project-links">
 
           ${
-            project.github_url
+            githubUrl
               ? `
                 <a
-                  href="${project.github_url}"
+                  href="${escapeHtml(githubUrl)}"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-btn"
@@ -124,10 +126,10 @@ async function loadProjects() {
           }
 
           ${
-            project.live_url
+            liveUrl
               ? `
                 <a
-                  href="${project.live_url}"
+                  href="${escapeHtml(liveUrl)}"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-btn"
@@ -164,7 +166,9 @@ document.addEventListener("DOMContentLoaded", () => {
   loadProjects();
 });
 
-// ===== CONTACT FORM =====
+// =====================================
+// CONTACT FORM
+// =====================================
 
 const contactForm = document.getElementById("contactForm");
 const contactStatus = document.getElementById("contactStatus");

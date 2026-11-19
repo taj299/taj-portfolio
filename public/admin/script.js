@@ -1,3 +1,11 @@
+function escapeHtml(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 // ===============================
 // ADMIN DASHBOARD
 // ===============================
@@ -50,6 +58,13 @@ async function loadProjects() {
 
     projectList.innerHTML = "";
 
+    // Update the Projects stat card with the real count
+    const projectsStat = document.querySelectorAll(".card")[1]?.querySelector("strong");
+
+    if (projectsStat) {
+      projectsStat.textContent = (data.projects || []).length;
+    }
+
     if (!data.projects || data.projects.length === 0) {
       projectList.innerHTML = `
                 <p>No projects found.</p>`;
@@ -63,8 +78,8 @@ async function loadProjects() {
 
       projectElement.innerHTML = `
                 <div class="project-info">
-                    <h3>${project.title}</h3>
-                    <p>${project.technologies || ""}</p>
+                   <h3>${escapeHtml(project.title)}</h3>
+                   <p>${escapeHtml(project.technologies || "")}</p>
                 </div>
 
                 <div class="project-actions">
@@ -434,27 +449,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadStats();
   loadProjects();
   loadMessages();
-
-});
-
-// ===============================
-// COUNT PORTFOLIO VIEW
-// ===============================
-
-async function countPortfolioView() {
-  try {
-    await fetch("/api/view", {
-      method: "POST",
-    });
-
-    console.log("Portfolio view counted");
-  } catch (error) {
-    console.error("Failed to count portfolio view:", error);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  countPortfolioView();
+  loadResumeInfo();
 });
 
 // ===============================
@@ -462,74 +457,220 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===============================
 
 async function loadMessages() {
+  try {
+    const response = await fetch("/api/messages");
+    const data = await response.json();
 
-    try {
+    console.log("Messages API response:", data);
 
-        const response = await fetch("/api/messages");
-        const data = await response.json();
+    if (!data.success) {
+      console.error("Failed to load messages");
+      return;
+    }
 
-        console.log("Messages API response:", data);
+    const messageList = document.querySelector("#messageList");
+    const messageCount = document.querySelector("#messageCount");
 
-        if (!data.success) {
-            console.error("Failed to load messages");
-            return;
-        }
+    if (!messageList) return;
 
-        const messageList = document.querySelector("#messageList");
-        const messageCount = document.querySelector("#messageCount");
+    const messages = data.messages || [];
 
-        if (!messageList) return;
+    // Update count
+    if (messageCount) {
+      messageCount.textContent = messages.length;
+    }
 
-        const messages = data.messages || [];
-
-        // Update count
-        if (messageCount) {
-            messageCount.textContent = messages.length;
-        }
-
-        // No messages
-        if (messages.length === 0) {
-
-            messageList.innerHTML = `
+    // No messages
+    if (messages.length === 0) {
+      messageList.innerHTML = `
                 <p>No messages yet.</p>
             `;
 
-            return;
-        }
+      return;
+    }
 
-        // Display messages
-        messageList.innerHTML = "";
+    // Display messages
+    messageList.innerHTML = "";
 
-        messages.forEach((message) => {
+    messages.forEach((message) => {
+      const messageElement = document.createElement("div");
 
-            const messageElement = document.createElement("div");
+      messageElement.className = "message";
 
-            messageElement.className = "message";
-
-            messageElement.innerHTML = `
+      messageElement.innerHTML = `
                 <div class="message-info">
 
-                    <h3>${message.name}</h3>
+                    <h3>${escapeHtml(message.name)}</h3>
 
                     <p>
                         <strong>Email:</strong>
-                        ${message.email}
+                        ${escapeHtml(message.email)}
                     </p>
 
                     <p>
-                        ${message.message}
+                        ${escapeHtml(message.message)}
                     </p>
 
-                </div>
-            `;
+                    <button
+                        class="delete-btn"
+                        onclick="deleteMessage(${Number(message.id)})">
+                        Delete
+                    </button>
 
-            messageList.appendChild(messageElement);
+                </div>`;
 
-        });
-
-    } catch (error) {
-
-        console.error("Failed to load messages:", error);
-
-    }
+      messageList.appendChild(messageElement);
+    });
+  } catch (error) {
+    console.error("Failed to load messages:", error);
+  }
 }
+
+// ===============================
+// DELETE MESSAGE
+// ===============================
+
+async function deleteMessage(id) {
+  const confirmed = confirm("Delete this message permanently?");
+
+  if (!confirmed) return;
+
+  try {
+    const response = await fetch(`/api/messages/${id}`, {
+      method: "DELETE",
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      alert(data.message || "Failed to delete message");
+      return;
+    }
+
+    await loadMessages();
+  } catch (error) {
+    console.error("Failed to delete message:", error);
+    alert("Something went wrong while deleting the message.");
+  }
+}
+
+// Make function available to onclick=""
+window.deleteMessage = deleteMessage;
+
+// ===============================
+// CURRENT RESUME INFO
+// ===============================
+
+function showResumeInfo(fileName) {
+  const nameElement = document.getElementById("currentResumeName");
+
+  if (!nameElement) return;
+
+  nameElement.textContent = `File: ${fileName}`;
+
+  // The next <p> is the "Format: ..." line
+  const formatElement = nameElement.nextElementSibling;
+  const extension = (fileName.split(".").pop() || "").toUpperCase();
+
+  if (formatElement && extension) {
+    formatElement.textContent = `Format: ${extension}`;
+  }
+}
+
+async function loadResumeInfo() {
+  try {
+    const response = await fetch("/api/admin/resume/info");
+    const data = await response.json();
+
+    if (!response.ok || !data.success) return;
+
+    if (!data.exists) {
+      const nameElement = document.getElementById("currentResumeName");
+
+      if (nameElement) {
+        nameElement.textContent = "File: No resume uploaded yet";
+      }
+
+      return;
+    }
+
+    showResumeInfo(data.fileName);
+  } catch (error) {
+    console.error("Failed to load resume info:", error);
+  }
+}
+
+// ===============================
+// RESUME UPLOAD MANAGEMENT
+// ===============================
+
+const resumeUploadForm = document.getElementById("resumeUploadForm");
+
+resumeUploadForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const resumeFile = document.getElementById("resumeFile");
+  const status = document.getElementById("resumeUploadStatus");
+  const uploadButton = document.getElementById("uploadResumeBtn");
+
+  const file = resumeFile?.files?.[0];
+
+  if (!file) {
+    status.textContent = "Please select a resume file.";
+    return;
+  }
+
+  if (file.size === 0 || file.size > 5 * 1024 * 1024) {
+    status.textContent = "File size must be between 1 byte and 5 MB.";
+    return;
+  }
+
+  const allowedExtensions = ["pdf", "doc", "docx", "txt"];
+  const extension = file.name.split(".").pop().toLowerCase();
+
+  if (!allowedExtensions.includes(extension)) {
+    status.textContent = "Only PDF, DOC, DOCX and TXT files are allowed.";
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("resume", file);
+
+  uploadButton.disabled = true;
+  uploadButton.textContent = "Uploading...";
+  status.textContent = "Please wait...";
+
+  try {
+    const response = await fetch("/api/admin/resume", {
+      method: "PUT",
+      body: formData,
+    });
+
+    let data;
+
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error(`Server error (${response.status}). Please try again.`);
+    }
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Resume upload failed.");
+    }
+
+    status.textContent = `${data.fileName} uploaded successfully!`;
+
+    showResumeInfo(data.fileName);
+
+    document.getElementById("downloadCurrentResume").href =
+      "/api/resume?t=" + Date.now();
+
+    resumeUploadForm.reset();
+  } catch (error) {
+    console.error("Resume upload error:", error);
+    status.textContent = error.message;
+  } finally {
+    uploadButton.disabled = false;
+    uploadButton.textContent = "Upload / Replace Resume";
+  }
+});

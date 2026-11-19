@@ -1350,3 +1350,399 @@ footer p {
     font-size: 14px;
     min-height: 20px;
 }
+
+
+/* =====================================================
+   HERO REDESIGN (two columns, big glowing profile photo)
+   ===================================================== */
+
+@media (min-width: 801px) {
+    .hero {
+        grid-template-columns: 1.15fr 1fr;
+        gap: 60px;
+    }
+
+    /* keep text block left-aligned like the reference */
+    .hero-description {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .hero-buttons {
+        justify-content: flex-start;
+    }
+}
+
+.profile-area {
+    justify-self: center;
+}
+
+.profile-photo img {
+    width: 400px;
+    height: 400px;
+    max-width: 100%;
+    border: 4px solid #00a8ff;
+    box-shadow:
+        0 0 0 8px rgba(0, 168, 255, 0.10),
+        0 0 70px rgba(0, 168, 255, 0.45);
+}
+
+.hero-social {
+    display: flex;
+    gap: 18px;
+    margin: 26px 0 8px;
+}
+
+.hero-social a {
+    width: 36px;
+    height: 36px;
+    color: #00a8ff;
+    transition: 0.3s ease;
+}
+
+.hero-social a svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.hero-social a:hover {
+    color: #ffffff;
+    transform: translateY(-3px);
+    filter: drop-shadow(0 0 10px rgba(0, 168, 255, 0.7));
+}
+
+@media (max-width: 800px) {
+    .profile-photo img {
+        width: 280px;
+        height: 280px;
+    }
+}
+
+
+/* =====================================================
+   CONTACT SECTION REDESIGN (two columns + form card)
+   ===================================================== */
+
+.contact-section {
+    text-align: left;
+}
+
+.contact-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.contact-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #00a8ff;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+.contact-eyebrow::before {
+    content: "";
+    width: 40px;
+    height: 2px;
+    background: #00a8ff;
+}
+
+.contact-intro h2 {
+    font-size: clamp(34px, 5vw, 48px);
+    line-height: 1.15;
+    margin-bottom: 22px;
+}
+
+.contact-lead {
+    color: #9ca8b8;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 440px;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #ffffff;
+    text-decoration: none;
+    margin-bottom: 30px;
+}
+
+.contact-info-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111a27;
+    border: 1px solid #1d2c40;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.contact-info-item small {
+    display: block;
+    color: #7f8b99;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+}
+
+.contact-info-item:hover .contact-info-icon {
+    border-color: #00a8ff;
+}
+
+.contact-follow {
+    color: #7f8b99;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.contact-socials {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.contact-socials a {
+    padding: 11px 18px;
+    background: #111a27;
+    border: 1px solid #1d2c40;
+    border-radius: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.contact-socials a:hover {
+    border-color: #00a8ff;
+    color: #00a8ff;
+    transform: translateY(-3px);
+}
+
+.contact-form.contact-card {
+    max-width: none;
+    margin: 0;
+    padding: 32px;
+    background: #111a27;
+    border: 1px solid #1d2c40;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    gap: 20px;
+}
+
+.contact-card h3 {
+    font-size: 22px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.contact-card .form-group label {
+    color: #9ca8b8;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.contact-card .form-group input,
+.contact-card .form-group textarea {
+    background: #0a111c;
+    border-color: #1d2c40;
+}
+
+.contact-form .contact-submit {
+    align-self: stretch;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #00a8ff;
+    color: #06121f;
+    font-size: 15px;
+    font-weight: 700;
+    transition: 0.3s ease;
+}
+
+.contact-form .contact-submit:hover:not(:disabled) {
+    background: #35bcff;
+    box-shadow: 0 8px 25px rgba(0, 168, 255, 0.3);
+}
+
+@media (max-width: 900px) {
+    .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =====================================================
+   CERTIFICATIONS
+   ===================================================== */
+
+.cert-grid {
+    max-width: 1100px;
+    margin: 45px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.cert-card {
+    background: #0d1117;
+    border: 1px solid #1d2c40;
+    border-radius: 14px;
+    padding: 28px;
+    transition: 0.3s ease;
+}
+
+.cert-card:hover {
+    border-color: #00a8ff;
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 168, 255, 0.15);
+}
+
+.cert-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background: #111a27;
+    border: 1px solid #1d2c40;
+    border-radius: 12px;
+    margin-bottom: 18px;
+}
+
+.cert-card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.cert-issuer {
+    color: #00a8ff;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.cert-date {
+    color: #7f8b99;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    margin-bottom: 22px;
+}
+
+.cert-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+
+/* =====================================================
+   ABOUT SECTION (open-to-work badge + actions)
+   ===================================================== */
+
+.about-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 16px;
+    margin-bottom: 20px;
+    background: rgba(34, 197, 94, 0.10);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    border-radius: 999px;
+    color: #4ade80;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.about-badge i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 10px #22c55e;
+}
+
+.about-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+
+/* =====================================================
+   POLISH FIXES (alignment, typewriter caret, skill chips)
+   ===================================================== */
+
+/* Align hero with navbar and the other sections */
+.hero {
+    max-width: 1200px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+/* Cards/forms use the full section width (same as Projects) */
+.cert-grid,
+.contact-layout {
+    max-width: none;
+    width: 100%;
+}
+
+/* Typewriter: caret stays at the end of the text, not at the column edge */
+.typewriter {
+    width: fit-content;
+    max-width: 0;
+    animation:
+        typingWidth 4s steps(30, end) forwards,
+        blink 0.8s infinite;
+}
+
+@keyframes typingWidth {
+    from { max-width: 0; }
+    to   { max-width: 100%; }
+}
+
+/* Skill tags as chips (same look as project tags) */
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.skill-tags span {
+    background: #151d28;
+    color: #00a8ff;
+    border: 1px solid #263241;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+/* Certificate cards keep a fixed size even when there is only one */
+.cert-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 420px));
+    justify-content: start;
+}
