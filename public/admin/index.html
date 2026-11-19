@@ -7,6 +7,9 @@
 
     <title>Admin Dashboard | Taj Portfolio</title>
 
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -27,6 +30,7 @@
                 <a href="#">📁 Projects</a>
                 <a href="#">🛠 Skills</a>
                 <a href="#">💼 Experience</a>
+                <a href="#resume">📄 Resume Management</a>
                 <a href="#">✉️ Messages</a>
                 <a href="#">⚙️ Settings</a>
             </nav>
@@ -237,6 +241,51 @@
                     <p>Loading messages...</p>
                 </div>
             </section>
+
+
+            <!-- =============================== -->
+            <!-- RESUME MANAGEMENT -->
+            <!-- =============================== -->
+
+            <section class="panel" id="resume">
+                <div class="panel-header">
+                    <div>
+                        <h2>Resume Management</h2>
+                        <p>Upload and manage your portfolio resume</p>
+                    </div>
+                </div>
+
+                <div class="resume-current">
+                    <h3>Current Resume</h3>
+
+                    <p id="currentResumeName">File: resume.pdf</p>
+                    <p>Format: PDF</p>
+
+                    <a href="/api/resume" id="downloadCurrentResume" class="btn secondary-btn">
+                        Download Current Resume
+                    </a>
+                </div> 
+                <div class="resume-upload-info">               
+                    <h3>Upload / Replace Resume</h3>
+
+                    <form id="resumeUploadForm">
+                        <label for="resumeFile">Choose your new resume (PDF, DOC, DOCX, TXT) </label>
+
+                        <input type="file" id="resumeFile" name="resume"
+                            accept=".pdf,.doc,.docx,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+                            required>
+
+                        <p>Maximum file size: 5 MB</p>
+
+                        <button type="submit" id="uploadResumeBtn" class="btn">
+                            Upload / Replace Resume
+                        </button>
+
+                        <p id="resumeUploadStatus" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </section>
+
             <!-- Quick Actions -->
             <section class="panel">
 
@@ -264,4 +313,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
